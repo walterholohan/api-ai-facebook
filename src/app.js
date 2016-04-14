@@ -80,7 +80,7 @@ function sendFBMessage(sender, messageData) {
     });
 }
 
-function makeSubscribeRequest() {
+function doSubscribeRequest() {
     // making subscribe post request
     request({
             method: 'POST',
@@ -120,7 +120,7 @@ app.get('/webhook/', function (req, res) {
         res.send(req.query['hub.challenge']);
 
         setTimeout(function () {
-            makeSubscribeRequest();
+            doSubscribeRequest();
         }, 3000);
     } else {
         res.send('Error, wrong validation token');
@@ -149,3 +149,5 @@ app.post('/webhook/', function (req, res) {
 app.listen(REST_PORT, function () {
     console.log('Rest service ready on port ' + REST_PORT);
 });
+
+doSubscribeRequest();
