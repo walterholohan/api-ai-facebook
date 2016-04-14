@@ -12,7 +12,11 @@ const APIAI_LANG = process.env.APIAI_LANG || 'en';
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
-const apiAiService = apiai(APIAI_ACCESS_TOKEN, "deprecated", {hostname: "dev.api.ai", endpoint: "/api/", language: APIAI_LANG});
+const apiAiService = apiai(APIAI_ACCESS_TOKEN, "deprecated", {
+    hostname: "dev.api.ai",
+    endpoint: "/api/",
+    language: APIAI_LANG
+});
 const sessionIds = new Map();
 
 function processEvent(event) {
@@ -76,6 +80,21 @@ function sendFBMessage(sender, messageData) {
     });
 }
 
+function makeSubscribeRequest() {
+    // making subscribe post request
+    request({
+            method: 'POST',
+            uri: "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" + FB_PAGE_ACCESS_TOKEN
+        },
+        function (error, response, body) {
+            if (error) {
+                console.error('Error while subscription: ', error);
+            } else {
+                console.log('Subscription result: ', response.body);
+            }
+        });
+}
+
 function isDefined(obj) {
     if (typeof obj == 'undefined') {
         return false;
@@ -99,6 +118,10 @@ app.all('*', function (req, res, next) {
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] == FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
+
+        setTimeout(function () {
+            makeSubscribeRequest();
+        }, 3000);
     } else {
         res.send('Error, wrong validation token');
     }
@@ -126,16 +149,3 @@ app.post('/webhook/', function (req, res) {
 app.listen(REST_PORT, function () {
     console.log('Rest service ready on port ' + REST_PORT);
 });
-
-// making subscribe post request
-request({
-        method: 'POST',
-        uri: "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" + FB_PAGE_ACCESS_TOKEN
-    },
-    function (error, response, body) {
-        if (error) {
-            console.error('Error while subscription: ', error);
-        } else {
-            console.log('Subscription result: ', response.body);
-        }
-    });
