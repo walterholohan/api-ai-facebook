@@ -29,6 +29,8 @@ function processEvent(event) {
         }
 
         console.log("Text", text);
+        
+        userInfoRequest(sender);
 
         let apiaiRequest = apiAiService.textRequest(text,
             {
@@ -144,6 +146,20 @@ function doSubscribeRequest() {
                 console.log('Subscription result: ', response.body);
             }
         });
+}
+
+function userInfoRequest(userId) {
+    request({
+            method: 'GET',
+            uri: "https://graph.facebook.com/v2.6/" + userId + "?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + FB_PAGE_ACCESS_TOKEN
+        },
+        function (error, response) {
+            if (error) {
+                console.error('Error while userInfoRequest: ', error);
+            } else {
+                console.log('userInfoRequest result: ', response.body);
+            }
+        })
 }
 
 function isDefined(obj) {
