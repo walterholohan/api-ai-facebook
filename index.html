@@ -30,31 +30,27 @@
                     $(document).ready(function () {
                         $('#paybill').click(function () {
                             MessengerExtensions.getUserID(function success(uids) {
-                                $('#data').html(uids.psid);
-                                $.post('https://fb-esbbot.herokuapp.com/billpayed', {
-                                    id: uids.psid
-                                }).done(function (data) {
-                                    close();
-//                        MessengerExtensions.requestCloseBrowser(function success() {
-//
-//                        }, function error(err) {
-//
-//                        });
-                                })
-
+                                $.ajax({
+                                    contentType: 'application/json',
+                                    data: '{"id": ' + uids.psid + '}',
+                                    dataType: 'json',
+                                    success: function(data){
+                                        close();
+                                    },
+                                    error: function(){
+                                        console.log("Device control failed");
+                                    },
+                                    type: 'POST',
+                                    url: 'https://fb-esbbot.herokuapp.com/billpayed'
+                                });
                             }, function error(err) {
 
                             });
                         });
                     });
                 })(jQuery);
-
-                //        window.extAsyncInit = function() {
-                //            // the Messenger Extensions JS SDK is done loading
-                //        };
             </script>
             <button type="button" id="paybill">Pay Now!</button>
-            <div id="data"></div>
         </div>
         <script src="javascripts/scale.fix.js"></script>
     </body>
