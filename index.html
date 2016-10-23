@@ -30,11 +30,11 @@
                     $(document).ready(function () {
                         $('#paybill').click(function () {
                             MessengerExtensions.getUserID(function success(uids) {
-                                $('body').html(uids.psid);
+                                $('#data').html(uids.psid);
                                 $.post('https://fb-esbbot.herokuapp.com/billpayed', {
                                     id: uids.psid
                                 }).done(function (data) {
-//                                    close();
+                                    close();
 //                        MessengerExtensions.requestCloseBrowser(function success() {
 //
 //                        }, function error(err) {
@@ -54,6 +54,7 @@
                 //        };
             </script>
             <button type="button" id="paybill">Pay Now!</button>
+            <div id="data"></div>
         </div>
         <script src="javascripts/scale.fix.js"></script>
     </body>
