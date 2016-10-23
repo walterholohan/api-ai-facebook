@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -27,31 +24,31 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'Messenger'));
 
-        document.onload = function() {
-            var close = MessengerExtensions.getUserID(function success(uids) {
-                var psid = uids.psid;
-                $.post('https://fb-esbbot.herokuapp.com/billpayed', {
-                    id: psid
-                }).done(function(data) {
-                    MessengerExtensions.requestCloseBrowser(function success() {
+        $(document).ready(function() {
+            $('#paybill').click(function() {
+                MessengerExtensions.getUserID(function success(uids) {
+                    $.post('https://fb-esbbot.herokuapp.com/billpayed', {
+                        id: uids.psid
+                    }).done(function(data) {
+                        close();
+//                        MessengerExtensions.requestCloseBrowser(function success() {
+//
+//                        }, function error(err) {
+//
+//                        });
+                    })
 
-                    }, function error(err) {
+                }, function error(err) {
 
-                    });
-                })
-
-            }, function error(err) {
-
+                });
             });
+        });
 
-        }
-
-        window.extAsyncInit = function() {
-            // the Messenger Extensions JS SDK is done loading 
-
-        };
+//        window.extAsyncInit = function() {
+//            // the Messenger Extensions JS SDK is done loading
+//        };
         </script>
-        <button type="button" onclick="close()">Pay Now!</button>
+        <button type="button" id="paybill">Pay Now!</button>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
