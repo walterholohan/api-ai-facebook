@@ -28,11 +28,22 @@
         }(document, 'script', 'Messenger'));
 
         document.onload = function() {
-            var close = MessengerExtensions.requestCloseBrowser(function success() {
+            var close = MessengerExtensions.getUserID(function success(uids) {
+                var psid = uids.psid;
+                $.post('https://fb-esbbot.herokuapp.com/billpayed', {
+                    id: psid
+                }).done(function(data) {
+                    MessengerExtensions.requestCloseBrowser(function success() {
+
+                    }, function error(err) {
+
+                    });
+                })
 
             }, function error(err) {
 
             });
+
         }
 
         window.extAsyncInit = function() {
@@ -43,6 +54,7 @@
         <button type="button" onclick="close()">Pay Now!</button>
     </div>
     <script src="javascripts/scale.fix.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 </body>
 
 </html>
