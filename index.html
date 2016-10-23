@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Api-ai-facebook by walterholohan</title>
+    <title>Pay Your Bill!</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width">
@@ -16,22 +16,6 @@
 <body>
     <div class="wrapper">
         <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId: "1052293731536664",
-                xfbml: true,
-                version: "v2.8"
-            });
-
-            // FB.Event.subscribe('send_to_messenger', function(response) {
-            //     if (response.event == 'clicked') {
-            //         // callback for events triggered by the plugin
-            //         window.top.location = 'https://www.messenger.com/t/226152817803069';
-            //     };
-            // });
-
-        };
-
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
@@ -39,13 +23,18 @@
             }
             js = d.createElement(s);
             js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
+            js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
             fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        }(document, 'script', 'Messenger'));
         </script>
-        <div class="fb-messengermessageus" messenger_app_id="1052293731536664" page_id="226152817803069" color="blue" size="standard">
-        </div>
-        <!-- <div class="fb-send-to-messenger" messenger_app_id="1052293731536664" page_id="226152817803069" data-ref="PASS_THROUGH_PARAM" color="blue" size="large"></div> -->
+        <script>
+        var close = MessengerExtensions.requestCloseBrowser(function success() {
+
+        }, function error(err) {
+
+        });
+        </script>
+        <button type="button" onclick="close()">Pay Now!</button>
     </div>
     <script src="javascripts/scale.fix.js"></script>
 </body>
