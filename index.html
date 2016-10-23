@@ -20,6 +20,7 @@
                         <p class="card-text">Account number: 12983773</p>
                         <p class="card-text">Amount due: &euro;370.79</p>
                         <button type="button" id="paybill" class="btn btn-primary">Pay Now!</button>
+                        <button type="button" id="close" class="btn btn-primary">Go back to chat ></button>
                     </div>
                 </div>
             </div>
@@ -38,6 +39,11 @@
 
             (function ($) {
                 $(document).ready(function () {
+                    $('#close').click(function() {
+                        MessengerExtensions.requestCloseBrowser(function success() {
+                        }, function error(err) {
+                        });
+                    });
                     $('#paybill').click(function () {
                         MessengerExtensions.getUserID(function success(uids) {
                             $.ajax({
@@ -45,14 +51,10 @@
                                 data: '{"id": ' + uids.psid + '}',
                                 dataType: 'json',
                                 success: function (data) {
-                                    var close = MessengerExtensions.requestCloseBrowser(function success() {
-                                    }, function error(err) {
-                                    });
+                                    $('#paybill').hide();
+                                    $('#close').show();
                                 },
                                 error: function () {
-                                    var close = MessengerExtensions.requestCloseBrowser(function success() {
-                                    }, function error(err) {
-                                    });
                                 },
                                 type: 'POST',
                                 url: 'https://fb-esbbot.herokuapp.com/billpayed'
