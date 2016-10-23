@@ -16,6 +16,7 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, { language: APIAI_LANG, requestSource: "fb" });
 const sessionIds = new Map();
+import {postAction} from './controllers/apiai'
 
 function processEvent(event) {
     console.log(event);
@@ -237,6 +238,8 @@ app.post('/webhook/', (req, res) => {
     }
 
 });
+
+app.post('/apiaiaction', postAction);
 
 app.listen(REST_PORT, () => {
     console.log('Rest service ready on port ' + REST_PORT);
