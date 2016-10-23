@@ -16,15 +16,6 @@
 <body>
     <div class="wrapper">
         <script>
-        var close = MessengerExtensions.requestCloseBrowser(function success() {
-
-        }, function error(err) {
-
-        });
-        window.extAsyncInit = function() {
-            // the Messenger Extensions JS SDK is done loading 
-
-        };
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
@@ -35,6 +26,19 @@
             js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'Messenger'));
+
+        document.onload = function() {
+            var close = MessengerExtensions.requestCloseBrowser(function success() {
+
+            }, function error(err) {
+
+            });
+        }
+
+        window.extAsyncInit = function() {
+            // the Messenger Extensions JS SDK is done loading 
+
+        };
         </script>
         <button type="button" onclick="close()">Pay Now!</button>
     </div>
