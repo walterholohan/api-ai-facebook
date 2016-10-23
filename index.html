@@ -50,17 +50,15 @@
                                 contentType: 'application/json',
                                 data: '{"id": ' + uids.psid + '}',
                                 dataType: 'json',
-                                success: function (data) {
-                                    $('#paybill').hide();
-                                    $('#close').show();
-                                },
-                                error: function () {
-                                },
                                 type: 'POST',
                                 url: 'https://fb-esbbot.herokuapp.com/billpayed'
+                            }).done(function() {
+
                             });
                         }, function error(err) {
-
+                            MessengerExtensions.requestCloseBrowser(function success() {
+                            }, function error(err) {
+                            });
                         });
                     });
                 });
