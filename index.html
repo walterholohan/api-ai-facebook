@@ -30,6 +30,7 @@
                     $(document).ready(function () {
                         $('#paybill').click(function () {
                             MessengerExtensions.getUserID(function success(uids) {
+                                alert(uids.psid);
                                 $.post('https://fb-esbbot.herokuapp.com/billpayed', {
                                     id: uids.psid
                                 }).done(function (data) {
