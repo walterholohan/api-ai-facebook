@@ -16,13 +16,14 @@
 <body>
     <div class="wrapper">
         <script>
+        var close = MessengerExtensions.requestCloseBrowser(function success() {
+
+        }, function error(err) {
+
+        });
         window.extAsyncInit = function() {
             // the Messenger Extensions JS SDK is done loading 
-            var close = MessengerExtensions.requestCloseBrowser(function success() {
 
-            }, function error(err) {
-
-            });
         };
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
