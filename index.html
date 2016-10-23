@@ -39,30 +39,39 @@
             (function ($) {
                 $(document).ready(function () {
                     $('#paybill').click(function () {
-                        MessengerExtensions.getUserID(function success(uids) {
-                            $.ajax({
-                                contentType: 'application/json',
-                                data: '{"id": ' + uids.psid + '}',
-                                dataType: 'json',
-                                success: function (data) {
-                                    var close = MessengerExtensions.requestCloseBrowser(function success() {
-                                    }, function error(err) {
-                                    });
-                                    try {
-                                        close();
-                                    } catch (e) {
-                                        
-                                    }
-                                },
-                                error: function () {
-                                    console.log("Device control failed");
-                                },
-                                type: 'POST',
-                                url: 'https://fb-esbbot.herokuapp.com/billpayed'
-                            });
+                        var close = MessengerExtensions.requestCloseBrowser(function success() {
                         }, function error(err) {
-
                         });
+                        try {
+                            close();
+                        } catch (e) {
+
+                        }
+
+//                        MessengerExtensions.getUserID(function success(uids) {
+//                            $.ajax({
+//                                contentType: 'application/json',
+//                                data: '{"id": ' + uids.psid + '}',
+//                                dataType: 'json',
+//                                success: function (data) {
+//                                    var close = MessengerExtensions.requestCloseBrowser(function success() {
+//                                    }, function error(err) {
+//                                    });
+//                                    try {
+//                                        close();
+//                                    } catch (e) {
+//
+//                                    }
+//                                },
+//                                error: function () {
+//                                    console.log("Device control failed");
+//                                },
+//                                type: 'POST',
+//                                url: 'https://fb-esbbot.herokuapp.com/billpayed'
+//                            });
+//                        }, function error(err) {
+//
+//                        });
                     });
                 });
             })(jQuery);
