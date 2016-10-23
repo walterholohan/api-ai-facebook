@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-block">
                         <h4 class="card-title">Bill Summary</h4>
-                        <p class="card-text">Account number: 12983774</p>
+                        <p class="card-text">Account number: 12983775</p>
                         <p class="card-text">Amount due: &euro;370.79</p>
                         <button type="button" id="paybill" class="btn btn-primary">Pay Now!</button>
                         <button type="button" id="close" class="btn btn-primary" style="display: none;">Go back to chat ></button>
@@ -53,12 +53,11 @@
                                 type: 'POST',
                                 url: 'https://fb-esbbot.herokuapp.com/billpayed'
                             }).done(function() {
-
+                                MessengerExtensions.requestCloseBrowser(function success() {
+                                }, function error(err) {
+                                });
                             });
                         }, function error(err) {
-                            MessengerExtensions.requestCloseBrowser(function success() {
-                            }, function error(err) {
-                            });
                         });
                     });
                 });
