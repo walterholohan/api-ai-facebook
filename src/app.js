@@ -30,7 +30,7 @@ function processEvent(event) {
 
         console.log("Text", text);
 
-        let apiaiRequest = apiAiService.textRequest(text, 
+        let apiaiRequest = apiAiService.textRequest(text,
             {
                 sessionId: sessionIds.get(sender)
             });
@@ -55,12 +55,13 @@ function processEvent(event) {
                                 if (facebookMessage.sender_action) {
                                     console.log('Response as sender action');
                                     sendFBSenderAction(sender, facebookMessage.sender_action, callback);
-                                } else {
+                                }
+                                else {
                                     console.log('Response as formatted message');
                                     sendFBMessage(sender, facebookMessage, callback);
                                 }
                             } catch (err) {
-                                sendFBMessage(sender, { text: err.message });
+                                sendFBMessage(sender, {text: err.message});
                             }
                         });
                     }
@@ -101,7 +102,7 @@ function chunkString(s, len) {
             output.push(s.substring(prev, curr));
             prev = curr;
             curr += len;
-        } 
+        }
         else {
             var currReverse = curr;
             do {
